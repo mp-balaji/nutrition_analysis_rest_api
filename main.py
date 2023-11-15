@@ -8,9 +8,9 @@ main = Blueprint("main", __name__)
 # Route to Home Page of the website
 @main.route('/')
 def home_page():
-    return "Hello World"
+    return render_template('home_page.html')
 
 # Route to the User's Profile page
 @main.route('/profile')
 def profile():
-    return "This is profile page"
+    return render_template('profile.html')
