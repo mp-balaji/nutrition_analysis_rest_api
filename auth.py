@@ -15,6 +15,9 @@ def signup_post():
     name = request.form.get('name')
     password = request.form.get('password')
 
+    print( email, name, password)
+    return redirect(url_for('auth.login'))
+
 @auth.route('/login')
 def login():
     return render_template('login.html')
