@@ -1,6 +1,6 @@
 # Handles the authentication part
 
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, url_for
 
 auth = Blueprint('auth', __name__)
 
@@ -16,4 +16,4 @@ def login():
 
 @auth.route('/logout')
 def logout():
-    return render_template('home.html')
+    return render_template('home_page.html')
