@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nutrition-analysis-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nutrition-analysis-app
+  template:
+    metadata:
+      labels:
+        app: nutrition-analysis-app
+    spec:
+      containers:
+      - name: nutrition-analysis-container
+        image: docker.io/draymond/nutrition-analysis:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "200m"
+          limits:
+            memory: "64Mi"
+            cpu: "250m"
