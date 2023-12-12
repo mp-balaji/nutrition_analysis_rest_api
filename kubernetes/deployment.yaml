@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nutrition-analysis-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nutrition-analysis-app
+  template:
+    metadata:
+      labels:
+        app: nutrition-analysis-app
+    spec:
+      volumes:
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials
+      containers:
+      - name: nutrition-analysis-container
+        image: docker.io/draymond/nutrition-analysis:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+        - name: FLASK_ENV
+          value: "prod"
+        - name: PORT
+          value: "5000"
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: gke-cloud-sql-secrets
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: gke-cloud-sql-secrets
+              key: password
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: gke-cloud-sql-secrets
+              key: database
+        - name: DB_PORT
+          value: "3306"
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "200m"
+          limits:
+            memory: "64Mi"
+            cpu: "250m"
+
+      - name: cloud-sql-proxy
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:latest
+        volumeMounts:
+        - name: cloudsql-instance-credentials
+          mountPath: /secrets/cloudsql
+          readOnly: true
+        args:
+          - "--port=3306"
+          - "utopian-catfish-400911:europe-west2:nutritional-analysis"
+          - "--credentials-file=/secrets/cloudsql/credentials.json"
+        securityContext:
+          runAsNonRoot: true
