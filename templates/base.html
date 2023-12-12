@@ -1,0 +1,18 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; }
+        header { background-color: black; color: white; padding: 10px 0; }
+        header nav { width: 90%; margin: 0 auto; }
+        header nav a { color: white; text-decoration: none; padding: 0 15px; }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block content %}{% endblock %}
+</body>
+</html>

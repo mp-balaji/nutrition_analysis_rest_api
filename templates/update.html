@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-box">
+        <h1>Change Password</h1>
+        <form action="{{ url_for('views.update', user=session['username']) }}" method="post" class="form">
+            <div class="form-field">
+                <input type="password" id="new_password" name="new_password" required>
+            </div>
+           
+            <div class="form-field">
+                <input type="submit" value="Update Password" class="button">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

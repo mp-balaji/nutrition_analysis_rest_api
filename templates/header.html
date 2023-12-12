@@ -1,0 +1,27 @@
+<!-- header.html -->
+<header>
+    <nav>
+        <div class="nav-left">
+            <a href="{{ url_for('views.home') }}">Home</a>
+        </div>
+        <div class="nav-left">
+            {% if 'username' in session %}
+                <a href="{{ url_for('views.logout') }}">Logout</a>
+            {% endif %}
+        </div>
+        <div class="nav-right">
+            {% if 'username' in session %}
+            {% set update_url = url_for('views.update', user=session['username']) %}
+            <a href="{{ update_url }}">Update Password</a>
+            {% endif %}
+        </div>
+        <div class="nav-right">
+            {% if 'username' in session %}
+            {% set delete_url = url_for('views.delete', user=session['username']) %}
+            <a href="{{ delete_url }}">Delete Account</a>
+            {% endif %}
+        </div>
+    </nav>
+    
+
+</header>
