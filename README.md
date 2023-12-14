@@ -22,7 +22,7 @@
 ## About 
 
 In the contemporary world, with a plethora of food choices available, determining the nutritional value of what we consume can be challenging. The use of a nutrition analyzer is valuable in assessing not only the calorie content but also providing contextual information about the food's nutritional composition.This analyser is developed using 
-- Nutritional Analysis API () for calorie analysis.
+- Nutritional Analysis API for calorie analysis.
 
 This application is developed using python and flask. 
 
