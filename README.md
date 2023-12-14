@@ -22,7 +22,7 @@
 ## About 
 
 In the contemporary world, with a plethora of food choices available, determining the nutritional value of what we consume can be challenging. The use of a nutrition analyzer is valuable in assessing not only the calorie content but also providing contextual information about the food's nutritional composition.This analyser is developed using 
-- External API () for calorie analysis.
+- Nutritional Analysis API () for calorie analysis.
 
 This application is developed using python and flask. 
 
@@ -160,23 +160,19 @@ Once authenticated, users will be directed to the nutritional analysis page. On 
 
 ### Change password page
 
-![Change_Password_Screen.png](./Assets/Change_Password)
+![Change_Password_Screen.png](./Assets/Change_Password_Screen.png)
 
 ### Sign up page 
 
-![Signup_Screen.png](./Assets/Signup_page)
+![Signup_Screen.png](./Assets/Signup_Screen.png)
 
 ### Login page
 
-![Login_Screen.png](./Assets/Login_page)
-
-### Nutritional analysis page
-
-![alt img]()
+![Login_Screen.png](./Assets/Login_Screen.png)
 
 ### Overall Result Page
 
-![Home_Page_Screen.png](Assets/Result_page)
+![Home_Page_Screen.png](Assets/Home_Page_Screen.png)
 
 ## Application Architecture
 
@@ -244,9 +240,7 @@ This deployment configured with **load balancer**
 
 Why Google Cloud SQL?
 
-Cloud SQL is a fully managed relational database service offered by Google Cloud Platform. It allows you to run and manage popular databases like MySQL, PostgreSQL, and SQL Server in the cloud without the overhead of database administration. 
-
-Cloud SQL provides features like automated backups, scaling, high availability, and security, making it easy to deploy, maintain, and scale databases for your applications in the cloud.
+Cloud SQL is a fully managed relational database service offered by Google Cloud Platform. It allows you to run and manage popular databases like MySQL, PostgreSQL, and SQL Server in the cloud without the overhead of database administration.Cloud SQL provides features like automated backups, scaling, high availability, and security, making it easy to deploy, maintain, and scale databases for your applications in the cloud.
 
 ### Kubernetes
 
