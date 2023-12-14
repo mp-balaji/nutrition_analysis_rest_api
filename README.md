@@ -4,7 +4,7 @@
 - [About](#about)
 - [Installation](#installation)
 - [System Overview](#system-overview)
-	- [Terms used for Text Analysis](#terms-used-for-nutritional-analysis)
+	- [Terms used for Nutritional Analysis](#terms-used-for-nutritional-analysis)
 - [System Architecture](#system-architecture)
 - [Application Overview](#application-overview)
 - [Application Architecture](#application-architecture)
