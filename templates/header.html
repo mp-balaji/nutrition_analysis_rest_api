@@ -2,7 +2,9 @@
 <header>
     <nav>
         <div class="nav-left">
-            <a href="{{ url_for('views.home') }}">Home</a>
+            {% if 'username' in session %}
+                <a href="{{ url_for('views.home') }}">Home</a>
+            {% endif %}
         </div>
         <div class="nav-left">
             {% if 'username' in session %}
