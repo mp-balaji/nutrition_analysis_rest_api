@@ -31,6 +31,12 @@ This application is developed using python and flask.
 
 Using Flask to build a Nutrional Analyser with Restful API Server.
 
+Clone the repository
+
+```sh
+git clone https://github.com/mp-balaji/nutrition_analysis_rest_api.git
+```
+
 
 ### Pre-requisites:
 - [Python 3.11](https://www.python.org/downloads/release/python-3110/)
@@ -38,33 +44,61 @@ Using Flask to build a Nutrional Analyser with Restful API Server.
 - [External API](https://developer.edamam.com/edamam-nutrition-api/)
 
 
-## Installation
+## Running the application locally against a local file database
 
-1. Clone the repository
-
-	```sh
-	git clone https://github.com/mp-balaji/nutrition_analysis_rest_api.git
-	```
-2. Create virtual environment and install requirements with pip
+1. Create virtual environment and install requirements with pip
 
 	```sh
-	python3 -m venv venv
-	pip install -r requirements.txt
+	bash setup.sh
 	```
-
-3. Create Service Account on Google Cloud Console, we will need this service account json to setup and access Cloud Datastore. The account creation can be done by following the steps given in this [link](https://cloud.google.com/iam/docs/creating-managing-service-accounts).
-
-	After creating the service account, download the service account json (sa.json) from console and move it to the application root directory. 
-
-4. Export environment variables
+2. Run local database migration script:
 
 	```sh
-	source local_env.sh
+	bash migrate.sh
 	```
-5. Run the application locally
+
+3. Run the application:
+
 	```sh
-	python main.py
+	bash run.sh
 	```
+
+## Running the application locally against a GCP Cloud SQL database 
+
+1. Create a GCP CLoud SQL instance and database as described here - [Create a Cloud SQL instance](https://cloud.google.com/sql/docs/mysql/connect-instance-cloud-shell#create-instance)
+
+2. Start a cloud proxy that is connected to the GCP Cloud SQL instance as described in this [guide](https://cloud.google.com/sql/docs/mysql/connect-auth-proxy). 
+
+3. Create virtual environment and install requirements with pip
+
+	```sh
+	bash setup.sh
+	```
+
+4. Export the environment variables defined in the `config.py` `ProdConfig` class and run:
+
+	```sh
+	export FLASK_ENV=prod
+	```
+
+4. Run the application using the `run-cloud.sh` script:
+	
+	```sh
+	bash run-cloud.sh
+	```
+
+This should now automatically connect to the Cloud SQL database. In a later section of this README the process for connecting to the database when running the application in a Kubernetes cluster will be described.
+
+### Run with Docker
+
+```
+$ docker build -t nutrional-analyser:{TAG} .
+
+$ docker run -p 5000:5000 --name nutrional-analyser nutrional-analyser:{TAG}
+ 
+```
+
+This will run the application using a local file database. It is possible to run the application against the Cloud SQL database when running inside a docker container. The most reliable way to do so is to run the cloud proxy on the docker container that is running the application. This is not recommended when running the application in production and for local development the file based database is acceptable.
 
 ### Flask Application Structure 
 ```
@@ -105,45 +139,20 @@ Using Flask to build a Nutrional Analyser with Restful API Server.
 | | |────views.py
 ```
 
-### Run flask for development
-```
-$ python main.py
-```
-### Run flask for production
-
-
-```
-$ gunicorn -w 4 -b 127.0.0.1:5000 run:app
-
-```
-
-* -w : number of worker
-* -b : Socket to bind
-
-
-### Run with Docker
-
-```
-$ docker build -t nutrional-analyser .
-
-$ docker run -p 5000:5000 --name nutrional-analyser nutrional-analyser
- 
-```
-
 ## System Overview
 
 The user interface operates seamlessly on the front-end, functioning as a website. On the back-end, there is a Restful service interface designed for CRUD operations, such as querying textual content data. This back-end is deployed on Google Cloud to ensure scalable performance using Kubernetes for the dockerized image. SSL deployments are facilitated through Google Cloud. The application utilizes the Nutritional Analysis API for calculating calorie content in diets. Additionally, Google Cloud SQL serves as the database for storing textual content information.
 
 ### Exploring Components in Nutritional Analysis App
 
-Nutritional Analysis
+**Nutritional Analysis**
 The Nutritional Analysis App is a web-based application that allows users to sign up, log in, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front-end serving as a user interface and the back-end providing a RESTful service interface for CRUD operations related to user authentication and food entry. The back-end is deployed on Google Cloud using Kubernetes for scalable performance, and Do.(we can chnage password or delete the account)
 
-User Authentication
+**User Authentication**
 Sign Up: Users can sign up by providing their details, which are stored securely in the database.
 Login: After signing up, users can log in using their credentials. The database verifies the login details for authentication.
 
-Food Entry and Analysis
+**Food Entry and Analysis**
 Once successfully authenticated, users can enter details about the food they have consumed, including the quantity. The application then performs nutritional analysis to provide information on macro-nutrients and total calories bur
 
 ## System Architecture
@@ -230,12 +239,6 @@ Customers tend to choose GCP as a secondary vendor in a hybrid solution, though 
 
 This distribution of resources provides several benefits, including redundancy in case of failure and reduced latency by locating resources closer to clients. This distribution also introduces some rules about how resources can be used together.
 
-The backend is currently accessible as a  flask application on Google cloud (Google Kubernetes Engine).
-
-[http://34.105.204.16:8000/](http://34.105.204.16:8000/)
-
-This deployment configured with **load balancer**
-
 #### Cloud SQL
 
 Why Google Cloud SQL?
@@ -243,26 +246,6 @@ Why Google Cloud SQL?
 Cloud SQL is a fully managed relational database service offered by Google Cloud Platform. It allows you to run and manage popular databases like MySQL, PostgreSQL, and SQL Server in the cloud without the overhead of database administration.Cloud SQL provides features like automated backups, scaling, high availability, and security, making it easy to deploy, maintain, and scale databases for your applications in the cloud.
 
 Cloud SQL is designed to provide consistent performance with the capability to handle large amounts of traffic and data processin. It integrates with other cloud services provided by the cloud vendor, such as cloud compute services, for a seamless cloud experience.Cloud SQL services include automated backups and point-in-time recovery to safeguard data.Cloud SQL services are often compliant with common industry standards and certifications, which can help users meet their compliance obligations.
-
-### Kubernetes
-
-Kubernetes is a portable, extensible, open source platform for managing containerised workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.
-
-Kubernetes, at its basic level, is a system for running and coordinating containerised applications across a cluster of machines. It is a platform designed to completely manage the life cycle of containerised applications and services using methods that provide predictability, scalability, and high availability.
-
-Kubernetes allows users to run scalable, highly available containerised workloads on a highly abstracted platform. While Kubernetes’ architecture and set of internal components can at first seem daunting, their power, flexibility, and robust feature set are unparalleled in the open-source world.
-
-**service.yaml** contains Kubernetes load-balancer configuration for the project.
-
-```yaml
-
- ```
-
-**deployment.yaml** contains Kubernetes nodes and replicas configuration for the project.
-
-```yaml
-
-  ```
 
 ### Docker
 
@@ -275,3 +258,18 @@ Docker provides tooling and a platform to manage the lifecycle of your container
 -   Develop your application and its supporting components using containers.
 -   The container becomes the unit for distributing and testing your application.
 -   When you’re ready, deploy your application into your production environment, as a container or an orchestrated service. This works the same whether your production environment is a local data centre, a cloud provider, or a hybrid of the two.
+
+### Kubernetes
+
+Kubernetes is a portable, extensible, open source platform for managing containerised workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.
+
+Kubernetes, at its basic level, is a system for running and coordinating containerised applications across a cluster of machines. It is a platform designed to completely manage the life cycle of containerised applications and services using methods that provide predictability, scalability, and high availability.
+
+Kubernetes allows users to run scalable, highly available containerised workloads on a highly abstracted platform. While Kubernetes’ architecture and set of internal components can at first seem daunting, their power, flexibility, and robust feature set are unparalleled in the open-source world.
+
+A description of how this application is deployed to Kubernetes can be found [here](./kubernetes/README.md).
+
+**Creating and running an application in a GKE Kubernetes cluster:**
+
+In order to deploy the resources in the `kubernetes` directory to a Kubernetes cluster in GCP, and run this application on the cluster, a number of steps are required. The cluster must be created in the GCP console, and service account configuration must be applied to the cluster so that it can access the Cloud SQL instance required by the application. The steps to do this are described in this [guide](https://cloud.google.com/sql/docs/mysql/connect-kubernetes-engine).
+

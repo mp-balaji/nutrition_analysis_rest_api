@@ -18,7 +18,7 @@ spec:
           secretName: cloudsql-instance-credentials
       containers:
       - name: nutrition-analysis-container
-        image: docker.io/draymond/nutrition-analysis:v2
+        image: docker.io/draymond/nutrition-analysis:v3
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
