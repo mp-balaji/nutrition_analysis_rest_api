@@ -149,11 +149,13 @@ The user interface operates seamlessly on the front-end, functioning as a websit
 The Nutritional Analysis App is a web-based application that allows users to sign up, log in, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front-end serving as a user interface and the back-end providing a RESTful service interface for CRUD operations related to user authentication and food entry. The back-end is deployed on Google Cloud using Kubernetes for scalable performance, and Do.(we can chnage password or delete the account)
 
 **User Authentication**
+
 Sign Up: Users can sign up by providing their details, which are stored securely in the database.
 Login: After signing up, users can log in using their credentials. The database verifies the login details for authentication.
 
-**Food Entry and Analysis**
-Once successfully authenticated, users can enter details about the food they have consumed, including the quantity. The application then performs nutritional analysis to provide information on macro-nutrients and total calories bur
+**Nutritional Analysis**
+
+This feature allows users to log food consumption details, including quantity. Upon successful authentication, the application leverages an external nutritional API to provide information on macronutrients and calories burned, enhancing the user's dietary tracking experience.
 
 ## System Architecture
 
