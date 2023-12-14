@@ -4,7 +4,7 @@
 - [About](#about)
 - [Installation](#installation)
 - [System Overview](#system-overview)
-	- [Terms used for Text Analysis](#terms-used-for-text-analysis)
+	- [Terms used for Text Analysis](#terms-used-for-nutritional-analysis)
 - [System Architecture](#system-architecture)
 - [Application Overview](#application-overview)
 - [Application Architecture](#application-architecture)
@@ -12,11 +12,8 @@
 	 - [RESTful-API](#restful-api)
 	 - [CRUD Operations](#crud-operations)
 	 - [External APIs Used](#external-apis-used)
-	 	- [Google Natural Language API](#google-natural-language-api)
-		- [External API- Perspective API](#external-api-perspective-api)
 - [Cloud Infrastructure](#cloud-infrastructure)
     - [Google Cloud](#google-cloud)
-    - [Cloud Datastore](#cloud-datastore)
 	- [Kubernetes](#kubernetes)
 	- [Docker](#docker)
 
@@ -26,10 +23,8 @@
 
 In the contemporary world, with a plethora of food choices available, determining the nutritional value of what we consume can be challenging. The use of a nutrition analyzer is valuable in assessing not only the calorie content but also providing contextual information about the food's nutritional composition.This analyser is developed using 
 - External API () for calorie analysis.
-- Perspective API (Perspective) for . 
 
 This application is developed using python and flask. 
-
 
 
 ## Installation
@@ -40,9 +35,6 @@ Using Flask to build a Nutrional Analyser with Restful API Server.
 ### Pre-requisites:
 - [Python 3.10](https://www.python.org/downloads/release/python-3100/)
 - [Google Cloud Platform]()
-- [Cloud Datastore Emulator]()
-- [Perspective API Account]()
-- [Google Natural Language V1]()
 
 
 ## Installation
@@ -63,23 +55,12 @@ Using Flask to build a Nutrional Analyser with Restful API Server.
 
 	After creating the service account, download the service account json (sa.json) from console and move it to the application root directory. 
 
-4. Create account on [Perspective platform](https://developers.perspectiveapi.com/s/?language=en_US), which we will be using to analyse toxicity of the content. After creation the API needs to be enabled on the Google Cloud APIs.
-
-	Update PERSPECTIVE_API_KEY in the config.py under class Config
-
-	```py
-	class Config:
-		PERSPECTIVE_API_KEY = ""
-	```
-
-5. Enable [Google Natural Language API](https://cloud.google.com/natural-language/docs/basics) on the console, this service will be used to analyse context and sentiment of the given document.
-
-6. Export environment variables
+4. Export environment variables
 
 	```sh
 	source local_env.sh
 	```
-7. Run the application locally
+5. Run the application locally
 	```sh
 	python main.py
 	```
@@ -88,42 +69,39 @@ Using Flask to build a Nutrional Analyser with Restful API Server.
 ```
 .
 |──────nutritional-analysis_rest_api/
-| |────modules/
-| | |────nutritional-analysis_rest_api/
-| | |──────__init__.py
-| | |──────auth.py
-| | |──────main.py
-| | |──────models.py
-| |────models/
-| | |────odb/
-| | |──────__init__.py
-| | |──────ndb.py
-| | |────.py/
-| | |────users.py
+| |────Assets/
+| |────Kubernetes/
+| | |────-deployment.yaml
+| | |──────hpa.yaml
+| | |──────service.yaml
+| | |────service-account.yaml
 | |────static/
-| | |────styles/
+| | |───CSS/
+| | |───images/
 | | |──────beauty.css
 | | |──────extended_beauty.css
-| |────template/
-| | |────nutritional-analysis_rest_api/
+| |────templates/
 | | |──────base.html
-| | |──────home_page.html
-| | |────index.html
+ | |──────header.html
+| | |──────home.html
 | | |────login.html
-| | |────profile.html
 | | |────signup.html
+| | |────update.html
 | | |────.gitignore
-| | |────Dockerfile
-| | |────LICENSE
-| | |────README.md
+| | |────app.py
 | | |────config.py
-| | |────deployment.yaml
-| | |────local_env.sh
-| | |────main.py
+| | |────contants.py
+| | |────Dockerfile
+| | |────README.md
+| | |────extensions.py
+| | |────migrate.sh
+| | |────models.py
+| | |────README.md
 | | |────requirements.txt
-| | |────service.yaml
-| | |────wsgi.py
-| | |────sa.json
+| | |────run-cloud.sh
+| | |────run.sh
+| | |────setup.sh
+| | |────views.py
 ```
 
 ### Run flask for development
@@ -153,49 +131,43 @@ $ docker run -p 5000:5000 --name nutrional-analyser nutrional-analyser
 
 ## System Overview
 
-The user interface operates seamlessly on the front end, functioning as a website. On the back end, there is a Restful service interface designed for CRUD operations, such as querying textual content data. This backend is deployed on Google Cloud to ensure scalable performance using Kubernetes for the dockerized image. SSL deployments are facilitated through Google Cloud. The application utilizes the Nutritional Analysis API for calculating calorie content in diets and providing nutritional information. Additionally, Google Cloud SQL serves as the database for storing user login details.
+The user interface operates seamlessly on the front-end, functioning as a website. On the back-end, there is a Restful service interface designed for CRUD operations, such as querying textual content data. This back-end is deployed on Google Cloud to ensure scalable performance using Kubernetes for the dockerized image. SSL deployments are facilitated through Google Cloud. The application utilizes the Nutritional Analysis API for calculating calorie content in diets. Additionally, Google Cloud SQL serves as the database for storing textual content information.
 
 ### Exploring Components in Nutritional Analysis App
 
 Nutritional Analysis
-The Nutritional Analysis App is a web-based application that allows users to sign up, log in, update passwords, delete accounts, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front end serving as a user interface and the back end providing a RESTful service interface for CRUD operations related to user authentication and nutrition analysis. The backend is deployed on Google Cloud using Kubernetes for scalable performance.
+The Nutritional Analysis App is a web-based application that allows users to sign up, log in, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front-end serving as a user interface and the back-end providing a RESTful service interface for CRUD operations related to user authentication and food entry. The back-end is deployed on Google Cloud using Kubernetes for scalable performance, and Do.(we can chnage password or delete the account)
 
 User Authentication
 Sign Up: Users can sign up by providing their details, which are stored securely in the database.
 Login: After signing up, users can log in using their credentials. The database verifies the login details for authentication.
 
-Home Page - User Interface
-Once successfully authenticated, users can enter details about the food they have consumed, including the quantity. The application then makes an external call to the  API performs nutritional analysis and returns the data which provides information on macro-nutrients and total calories.
+Food Entry and Analysis
+Once successfully authenticated, users can enter details about the food they have consumed, including the quantity. The application then performs nutritional analysis to provide information on macro-nutrients and total calories bur
 
 ## System Architecture
 
-!Flowcharts-2.jpeg(./assets/Systemarchitecture)
+![Flowcharts-2.jpeg](./assets/Systemarchitecture)
 
 ## Application Overview
 
 
 ### Main Page
-This will be the initial dashboard page, where the user will be required to enter signup details that will be stored inside the Google Cloud SQL Database. Upon submission, users will be redirected to a login page where they can input their usernames and passwords.
+This will be the initial dashboard page, where user will be required to enter signup details that will be stored inside the dbms.Upon submission, users will be redirected to a login page where they can input their usernames and passwords.
 
 Once authenticated, users will be directed to the nutritional analysis page. On this page, users are prompted to enter details about ingredients into a designated text input field for further processing and analysis.
 
-After the clicking the analyse button, we will get nutritional fact table
+### Change password page
 
-![alt img]()
-
-After clicking the analyse button the report(s) are generated for the same.
-
-### Main page
-
-![alt img]()
+![Change_Password_Screen.png](./Assets/Change_Password)
 
 ### Sign up page 
 
-![alt img]()
+![Signup_Screen.png](./Assets/Signup_page)
 
 ### Login page
 
-![alt img]()
+![Login_Screen.png](./Assets/Login_page)
 
 ### Nutritional analysis page
 
@@ -203,7 +175,7 @@ After clicking the analyse button the report(s) are generated for the same.
 
 ### Overall Result Page
 
-![alt img]()
+![Home_Page_Screen.png](Assets/Result_page)
 
 ## Application Architecture
 
@@ -269,13 +241,13 @@ This deployment configured with **load balancer**
 
 #### Cloud Datastore
 
-Why Google Cloud Datastore?
+Why Google Cloud SQL?
 
-Datastore is a NoSQL database renowned for its exceptional scalability. It autonomously manages sharding and replication processes, ensuring that the application benefits from a database that is both highly available and durable, automatically scaling to accommodate increasing workloads. Datastore offers a wide range of functionalities, including ACID transactions, SQL-like queries, indexes, and various other features.
+Cloud SQL is a fully managed relational database service offered by Google Cloud Platform. It allows you to run and manage popular databases like MySQL, PostgreSQL, and SQL Server in the cloud without the overhead of database administration. 
 
--   Product catalogs that provide real-time inventory and product details for a retailer.
--   User profiles that deliver a customised experience based on the user’s past activities and preferences.
--   Transactions based on ACID properties, for example, transferring funds from one bank account to another.
+Cloud SQL provides features like automated backups, scaling, high availability, and security, making it easy to deploy, maintain, and scale databases for your applications in the cloud.
+
+
 
 Datastore features include:
 
