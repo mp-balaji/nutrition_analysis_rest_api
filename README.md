@@ -153,19 +153,19 @@ $ docker run -p 5000:5000 --name nutrional-analyser nutrional-analyser
 
 ## System Overview
 
-The user interface operates seamlessly on the front-end, functioning as a website. On the back-end, there is a Restful service interface designed for CRUD operations, such as querying textual content data. This back-end is deployed on Google Cloud to ensure scalable performance using Kubernetes for the dockerized image. SSL deployments are facilitated through Google Cloud. The application utilizes the Nutritional Analysis API and an alternative to the Perspective API for calculating calorie content in diets. Additionally, Google Cloud Datastore serves as the database for storing textual content information.
+The user interface operates seamlessly on the front end, functioning as a website. On the back end, there is a Restful service interface designed for CRUD operations, such as querying textual content data. This backend is deployed on Google Cloud to ensure scalable performance using Kubernetes for the dockerized image. SSL deployments are facilitated through Google Cloud. The application utilizes the Nutritional Analysis API for calculating calorie content in diets and providing nutritional information. Additionally, Google Cloud SQL serves as the database for storing user login details.
 
 ### Exploring Components in Nutritional Analysis App
 
 Nutritional Analysis
-The Nutritional Analysis App is a web-based application that allows users to sign up, log in, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front-end serving as a user interface and the back-end providing a RESTful service interface for CRUD operations related to user authentication and food entry. The back-end is deployed on Google Cloud using Kubernetes for scalable performance, and Do.(we can chnage password or delete the account)
+The Nutritional Analysis App is a web-based application that allows users to sign up, log in, update passwords, delete accounts, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front end serving as a user interface and the back end providing a RESTful service interface for CRUD operations related to user authentication and nutrition analysis. The backend is deployed on Google Cloud using Kubernetes for scalable performance.
 
 User Authentication
 Sign Up: Users can sign up by providing their details, which are stored securely in the database.
 Login: After signing up, users can log in using their credentials. The database verifies the login details for authentication.
 
-Food Entry and Analysis
-Once successfully authenticated, users can enter details about the food they have consumed, including the quantity. The application then performs nutritional analysis to provide information on macro-nutrients and total calories bur
+Home Page - User Interface
+Once successfully authenticated, users can enter details about the food they have consumed, including the quantity. The application then makes an external call to the  API performs nutritional analysis and returns the data which provides information on macro-nutrients and total calories.
 
 ## System Architecture
 
@@ -175,7 +175,7 @@ Once successfully authenticated, users can enter details about the food they hav
 
 
 ### Main Page
-This will be the initial dashboard page, where user will be required to enter signup details that will be stored inside the dbms.Upon submission, users will be redirected to a login page where they can input their usernames and passwords.
+This will be the initial dashboard page, where the user will be required to enter signup details that will be stored inside the Google Cloud SQL Database. Upon submission, users will be redirected to a login page where they can input their usernames and passwords.
 
 Once authenticated, users will be directed to the nutritional analysis page. On this page, users are prompted to enter details about ingredients into a designated text input field for further processing and analysis.
 
