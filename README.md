@@ -151,9 +151,14 @@ The Nutritional Analysis App is a web-based application that allows users to sig
 **User Authentication**
 
 Sign Up: Users can sign up by providing their details, which are stored securely in the database.
+
 Login: After signing up, users can log in using their credentials. The database verifies the login details for authentication.
 
-**Nutritional Analysis**
+Update password: Existing users can conveniently update their password within the application, ensuring flexibility in managing account access
+
+Delete Account : The application includes a feature allowing users to easily delete their account when they choose not to use the service.
+
+**Food Consumption**
 
 This feature allows users to log food consumption details, including quantity. Upon successful authentication, the application leverages an external nutritional API to provide information on macronutrients and calories burned, enhancing the user's dietary tracking experience.
 
