@@ -169,10 +169,6 @@ This will be the initial dashboard page, where user will be required to enter si
 
 Once authenticated, users will be directed to the nutritional analysis page. On this page, users are prompted to enter details about ingredients into a designated text input field for further processing and analysis.
 
-### Change password page
-
-![Change_Password_Screen.png](./Assets/Change_Password_Screen.png)
-
 ### Sign up page 
 
 ![Signup_Screen.png](./Assets/Signup_Screen.png)
@@ -180,6 +176,11 @@ Once authenticated, users will be directed to the nutritional analysis page. On 
 ### Login page
 
 ![Login_Screen.png](./Assets/Login_Screen.png)
+
+
+### Change password page
+
+![Change_Password_Screen.png](./Assets/Change_Password_Screen.png)
 
 ### Overall Result Page
 
