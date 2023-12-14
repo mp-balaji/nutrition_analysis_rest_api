@@ -242,6 +242,8 @@ Why Google Cloud SQL?
 
 Cloud SQL is a fully managed relational database service offered by Google Cloud Platform. It allows you to run and manage popular databases like MySQL, PostgreSQL, and SQL Server in the cloud without the overhead of database administration.Cloud SQL provides features like automated backups, scaling, high availability, and security, making it easy to deploy, maintain, and scale databases for your applications in the cloud.
 
+Cloud SQL is designed to provide consistent performance with the capability to handle large amounts of traffic and data processin. It integrates with other cloud services provided by the cloud vendor, such as cloud compute services, for a seamless cloud experience.Cloud SQL services include automated backups and point-in-time recovery to safeguard data.Cloud SQL services are often compliant with common industry standards and certifications, which can help users meet their compliance obligations.
+
 ### Kubernetes
 
 Kubernetes is a portable, extensible, open source platform for managing containerised workloads and services, that facilitates both declarative configuration and automation. It has a large, rapidly growing ecosystem. Kubernetes services, support, and tools are widely available.
