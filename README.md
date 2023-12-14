@@ -33,8 +33,9 @@ Using Flask to build a Nutrional Analyser with Restful API Server.
 
 
 ### Pre-requisites:
-- [Python 3.10](https://www.python.org/downloads/release/python-3100/)
+- [Python 3.11](https://www.python.org/downloads/release/python-3110/)
 - [Google Cloud Platform]()
+- [External API](https://developer.edamam.com/edamam-nutrition-api/)
 
 
 ## Installation
