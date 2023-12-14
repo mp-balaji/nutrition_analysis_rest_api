@@ -148,7 +148,7 @@ Once successfully authenticated, users can enter details about the food they hav
 
 ## System Architecture
 
-![Flowcharts-2.jpeg](./assets/Systemarchitecture)
+![Flowcharts-2.jpeg](Assets/Flowcharts-2.jpeg)
 
 ## Application Overview
 
