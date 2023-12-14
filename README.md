@@ -183,11 +183,11 @@ Once authenticated, users will be directed to the nutritional analysis page. On 
 ![Login_Screen.png](./Assets/Login_Screen.png)
 
 
-### Change password page
+### Change Password page
 
 ![Change_Password_Screen.png](./Assets/Change_Password_Screen.png)
 
-### Homw Page
+### Home Page
 
 ![Home_Page_Screen.png](Assets/Home_Page_Screen.png)
 
