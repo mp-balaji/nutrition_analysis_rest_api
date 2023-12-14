@@ -20,10 +20,25 @@
         <div class="nav-right">
             {% if 'username' in session %}
             {% set delete_url = url_for('views.delete', user=session['username']) %}
-            <a href="{{ delete_url }}">Delete Account</a>
+            <a href="" onclick="delete_record('{{delete_url}}')">Delete Account</a>
             {% endif %}
         </div>
     </nav>
     
 
 </header>
+
+<script>
+    function delete_record(url) {
+
+        fetch(url,{
+            method:"DELETE"
+        })
+        .then(response => response.json())
+        .then(data => {
+        console.log("success");
+    })
+    .catch(error => console.error(error));
+    window.location.href="/signup";
+    }
+</script>
