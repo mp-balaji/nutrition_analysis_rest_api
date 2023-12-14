@@ -169,7 +169,7 @@ Once successfully authenticated, users can enter details about the food they hav
 
 ## System Architecture
 
-![alt img]()
+![alt img] !Flowcharts-2.jpeg(./assets/Systemarchitecture)
 
 ## Application Overview
 
