@@ -98,7 +98,7 @@ $ docker run -p 5000:5000 --name nutrional-analyser nutrional-analyser:{TAG}
  
 ```
 
-This will run the application using a local file database. It is possible to run the application against the Cloud SQL database when running inside a docker container. The most reliable way to do so is to run the cloud proxy on the docker container that is running the application. This is not recommended when running the application in production and for local development the file based database is acceptable.
+This will run the application using a local file database. It is possible to run the application against the Cloud SQL database when running inside a docker container. The most reliable way to do so is to run the cloud proxy on the docker container that is running the application. This is not recommended when running the application in production and for local development the file-based database is acceptable.
 
 ### Flask Application Structure 
 ```
@@ -146,7 +146,7 @@ The user interface operates seamlessly on the front-end, functioning as a websit
 ### Exploring Components in Nutritional Analysis App
 
 **Nutritional Analysis**
-The Nutritional Analysis App is a web-based application that allows users to sign up, log in, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front-end serving as a user interface and the back-end providing a RESTful service interface for CRUD operations related to user authentication and food entry. The back-end is deployed on Google Cloud using Kubernetes for scalable performance, and Do.
+The Nutritional Analysis App is a web-based application that allows users to sign up, log in, and analyze their food intake to get information on macro-nutrients and total calories burnt. The application follows a client-server architecture with the front-end serving as a user interface and the back-end providing a RESTful service interface for CRUD operations related to user authentication and food entry. The back-end is deployed on Google Cloud using Kubernetes for scalable performance.
 
 **User Authentication**
 
